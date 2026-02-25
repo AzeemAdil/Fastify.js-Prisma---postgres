@@ -5,7 +5,9 @@ import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
 import jwt from "@fastify/jwt";
-import Env from "./utils/env.ts";
+import Env from "./config/env.ts";
+
+import { setupPlugins } from "./plugins/index.ts";
 
 import {
   validatorCompiler,
@@ -38,6 +40,7 @@ app.setErrorHandler((error, request, reply) => {
 });
 
 const start = async () => {
+    await setupPlugins(app);
     await app.listen({ port: Number(Env.APP_PORT) });
     console.log(`Server started at http://localhost:${Env.APP_PORT} .... `);
 };
