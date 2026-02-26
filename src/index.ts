@@ -30,6 +30,23 @@ app.setSerializerCompiler(serializerCompiler);
 
 app.register(authRoutes, { prefix: "/api/auth" });
 
+app.addHook("onRequest", async (request, reply) => {
+    console.log('Incoming request:', request.method, request.url);
+});
+
+app.addHook("preHandler", async (request, reply) => {
+    console.log('Processing request:', request.method, request.url);
+});
+
+app.addHook("onResponse", async (request, reply) => {
+    console.log('Response sent for:', request.method, request.url);
+});
+
+app.get('/test', async (request, reply) => {
+  console.log('Route handler running');
+  return { message: 'Hello' };
+});
+
 app.get("/", async (request, reply) => {
     return { hello: "World" };
 });
