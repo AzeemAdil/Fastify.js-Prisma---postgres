@@ -1,6 +1,8 @@
 import fp from "fastify-plugin";
-import { PrismaClient } from "../generated/prisma/index.js";
 import type { FastifyPluginAsync } from "fastify";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "@prisma/client";
+import Env from "../config/env.ts";
 
 // 1. Extend Fastify's types so TypeScript knows about 'app.prisma'
 declare module "fastify" {
@@ -11,7 +13,11 @@ declare module "fastify" {
 
 const prismaPlugin: FastifyPluginAsync = fp(async (fastify, opts) => {
   // 2. Instantiate the Prisma Client
-  const prisma = new PrismaClient();
+
+  const adapter = new PrismaPg({
+    connectionString: Env.DATABASE_URL,
+  });
+  const prisma = new PrismaClient({adapter});
 
   // 3. Connect to the database
   await prisma.$connect();
