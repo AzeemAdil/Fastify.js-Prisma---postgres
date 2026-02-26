@@ -4,7 +4,6 @@ import type { ZodTypeProvider } from "fastify-type-provider-zod";
 
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
-import jwt from "@fastify/jwt";
 import Env from "./config/env.ts";
 
 import { setupPlugins } from "./plugins/index.ts";
