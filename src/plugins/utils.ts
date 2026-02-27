@@ -30,6 +30,7 @@ const utilsPlugin: FastifyPluginAsync = fp(async (fastify, opts) => {
   };
 
   fastify.decorate('utils', utils);
+
   
   fastify.log.info('Utils plugin registered');
 });
